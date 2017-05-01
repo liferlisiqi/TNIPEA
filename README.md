@@ -1,2 +1,1 @@
-# Three_Objective
-非线性三目标精确算法
+# tri-objective discrete optimization exact algorithm（TODOEA）
