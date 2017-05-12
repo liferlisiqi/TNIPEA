@@ -59,6 +59,7 @@
             this.epslonBTN.TabIndex = 1;
             this.epslonBTN.Text = "Epslon";
             this.epslonBTN.UseVisualStyleBackColor = true;
+            this.epslonBTN.Click += new System.EventHandler(this.epslonBTN_Click);
             // 
             // poleEpslonBTN
             // 
@@ -68,15 +69,16 @@
             this.poleEpslonBTN.TabIndex = 2;
             this.poleEpslonBTN.Text = "极点CUT+Epslon";
             this.poleEpslonBTN.UseVisualStyleBackColor = true;
+            this.poleEpslonBTN.Click += new System.EventHandler(this.poleEpslonBTN_Click);
             // 
             // epslonCUTBTN
             // 
             this.epslonCUTBTN.Location = new System.Drawing.Point(41, 183);
             this.epslonCUTBTN.Name = "epslonCUTBTN";
             this.epslonCUTBTN.Size = new System.Drawing.Size(75, 23);
-            this.epslonCUTBTN.TabIndex = 3;
+            this.epslonCUTBTN.TabIndex = 11;
             this.epslonCUTBTN.Text = "EpslonCUT";
-            this.epslonCUTBTN.UseVisualStyleBackColor = true;
+            this.epslonCUTBTN.Click += new System.EventHandler(this.epslonCUTBTN_Click);
             // 
             // PCECBTN
             // 
@@ -86,6 +88,7 @@
             this.PCECBTN.TabIndex = 4;
             this.PCECBTN.Text = "极点CUT+EpslonCUT";
             this.PCECBTN.UseVisualStyleBackColor = true;
+            this.PCECBTN.Click += new System.EventHandler(this.PCECBTN_Click);
             // 
             // label1
             // 

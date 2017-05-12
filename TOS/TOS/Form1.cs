@@ -44,10 +44,10 @@ namespace TOS
             }
             for (int i = 0; i < dt.Rows.Count; i++)
             {
-                Solution solution = new Solution();
-                solution.ob1 = Convert.ToDouble(dt.Rows[i][0].ToString());
-                solution.ob2 = Convert.ToDouble(dt.Rows[i][1].ToString());
-                solution.ob3 = Convert.ToDouble(dt.Rows[i][2].ToString());
+                Solution solution = new Solution(
+                   Convert.ToDouble(dt.Rows[i][0].ToString()),
+                   Convert.ToDouble(dt.Rows[i][1].ToString()),
+                   Convert.ToDouble(dt.Rows[i][2].ToString()));
                 allSolution.Add(solution);
             }
 
@@ -55,6 +55,44 @@ namespace TOS
             readDataBox.Text = (endTime - beginTime).TotalSeconds.ToString();
             MessageBox.Show("ok");
         }
+
+        //epslon约束法
+        private void epslonBTN_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        //先用极点CUT，再用epslon约束法
+        private void poleEpslonBTN_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        //每步都CUT的epslon约束法
+        private void epslonCUTBTN_Click(object sender, EventArgs e)
+        {
+            ArrayList restSolution = allSolution;
+            DateTime beginTime = System.DateTime.Now;
+            Solution pareto = new Solution();
+            ArrayList paretos = new ArrayList();
+            while (restSolution.Count != 0)
+            {
+                pareto = Find.z3Min(restSolution);
+                restSolution = TOS.Select.nondominates(restSolution, pareto);
+                paretos.Add(pareto);
+            }
+            DateTime endTime = System.DateTime.Now;
+            epslonCUTBox.Text = (endTime - beginTime).TotalSeconds.ToString();
+            Console.WriteLine("epslonCUT： " + paretos.Count);
+        }
+
+        //先用极点CUT，再每步都CUT的epslon约束法
+        private void PCECBTN_Click(object sender, EventArgs e)
+        {
+
+        }
+
+
 
 
     }
