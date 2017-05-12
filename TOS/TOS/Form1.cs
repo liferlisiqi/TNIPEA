@@ -59,22 +59,50 @@ namespace TOS
         //epslon约束法
         private void epslonBTN_Click(object sender, EventArgs e)
         {
+            ArrayList restSolution = allSolution;
+            ArrayList paretos = new ArrayList();
+            Solution pareto = new Solution();
+            DateTime beginTime = System.DateTime.Now;
 
+            DateTime endTime = System.DateTime.Now;
+            epslonCUTBox.Text = (endTime - beginTime).TotalSeconds.ToString();
+            Console.WriteLine("epslon： " + paretos.Count);
         }
 
         //先用极点CUT，再用epslon约束法
         private void poleEpslonBTN_Click(object sender, EventArgs e)
         {
+            ArrayList restSolution = allSolution;
+            ArrayList paretos = new ArrayList();
+            Solution pareto = new Solution();
+            DateTime beginTime = System.DateTime.Now;
 
+            pareto = Find.z3Min(restSolution);
+            restSolution = TOS.Select.nondominates(restSolution, pareto);
+            paretos.Add(pareto);
+
+            pareto = Find.z1Min(restSolution);
+            restSolution = TOS.Select.nondominates(restSolution, pareto);
+            paretos.Add(pareto);
+
+            pareto = Find.z2Min(restSolution);
+            restSolution = TOS.Select.nondominates(restSolution, pareto);
+            paretos.Add(pareto);
+
+
+
+            DateTime endTime = System.DateTime.Now;
+            epslonCUTBox.Text = (endTime - beginTime).TotalSeconds.ToString();
+            Console.WriteLine("PCepslon： " + paretos.Count);
         }
 
         //每步都CUT的epslon约束法
         private void epslonCUTBTN_Click(object sender, EventArgs e)
         {
-            ArrayList restSolution = allSolution;
-            DateTime beginTime = System.DateTime.Now;
-            Solution pareto = new Solution();
+            ArrayList restSolution = allSolution;         
             ArrayList paretos = new ArrayList();
+            Solution pareto = new Solution();
+            DateTime beginTime = System.DateTime.Now;          
             while (restSolution.Count != 0)
             {
                 pareto = Find.z3Min(restSolution);
@@ -89,11 +117,33 @@ namespace TOS
         //先用极点CUT，再每步都CUT的epslon约束法
         private void PCECBTN_Click(object sender, EventArgs e)
         {
+            ArrayList restSolution = allSolution;
+            ArrayList paretos = new ArrayList();
+            Solution pareto = new Solution();
+            DateTime beginTime = System.DateTime.Now;
 
+            pareto = Find.z3Min(restSolution);
+            restSolution = TOS.Select.nondominates(restSolution, pareto);
+            paretos.Add(pareto);
+
+            pareto = Find.z1Min(restSolution);
+            restSolution = TOS.Select.nondominates(restSolution, pareto);
+            paretos.Add(pareto);
+
+            pareto = Find.z2Min(restSolution);
+            restSolution = TOS.Select.nondominates(restSolution, pareto);
+            paretos.Add(pareto);
+
+            while (restSolution.Count != 0)
+            {
+                pareto = Find.z3Min(restSolution);
+                restSolution = TOS.Select.nondominates(restSolution, pareto);
+                paretos.Add(pareto);
+            }
+            DateTime endTime = System.DateTime.Now;
+            PCECBox.Text = (endTime - beginTime).TotalSeconds.ToString();
+            Console.WriteLine("PCECBTN: " + paretos.Count);
         }
-
-
-
 
     }
 }
