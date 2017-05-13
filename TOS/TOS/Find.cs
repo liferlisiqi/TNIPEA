@@ -33,9 +33,7 @@ namespace TOS
                     }
                 }
                 if (flag)
-                {
                     pareto = i.z3 < pareto.z3 ? i : pareto;
-                }
             }
             return pareto;
         }

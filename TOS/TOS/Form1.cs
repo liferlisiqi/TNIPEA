@@ -53,6 +53,7 @@ namespace TOS
 
             DateTime endTime = System.DateTime.Now;
             readDataBox.Text = (endTime - beginTime).TotalSeconds.ToString();
+            //NPOIHelper.outputExcel(allSolution, "D:/源码/多目标精确算法/多目标benchmark/GAP/3-8-11.xlsx");
             MessageBox.Show("ok");
         }
 
@@ -96,10 +97,16 @@ namespace TOS
             restSolution = TOS.Select.nondominates(restSolution, pareto);
             paretos.Add(pareto);
 
-
+            while (true)
+            {
+                pareto = Find.z3Min(restSolution, paretos);
+                if (Find.z3Min(restSolution, paretos).ob3 == 1)
+                    break;
+                paretos.Add(pareto);
+            }
 
             DateTime endTime = System.DateTime.Now;
-            epslonCUTBox.Text = (endTime - beginTime).TotalSeconds.ToString();
+            PCepslonBox.Text = (endTime - beginTime).TotalSeconds.ToString();
             Console.WriteLine("PCepslon： " + paretos.Count);
         }
 
@@ -119,6 +126,7 @@ namespace TOS
             DateTime endTime = System.DateTime.Now;
             epslonCUTBox.Text = (endTime - beginTime).TotalSeconds.ToString();
             Console.WriteLine("epslonCUT： " + paretos.Count);
+            //NPOIHelper.outputExcel(paretos, "D:/源码/多目标精确算法/多目标benchmark/GAP/3-8-11p.xls");
         }
 
         //先用极点CUT，再每步都CUT的epslon约束法
