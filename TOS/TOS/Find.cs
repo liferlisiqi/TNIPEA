@@ -18,6 +18,28 @@ namespace TOS
             return pareto;
         }
 
+        public static Solution z3Min(ArrayList solutions, ArrayList paretos)
+        {
+            Solution pareto = new Solution(100, 100, 1);
+            foreach (Solution i in solutions)
+            {
+                bool flag = true;
+                foreach (Solution j in paretos)
+                {
+                    if (j.dominate(i)||j.equal(i))
+                    {
+                        flag = false;
+                        break;
+                    }
+                }
+                if (flag)
+                {
+                    pareto = i.z3 < pareto.z3 ? i : pareto;
+                }
+            }
+            return pareto;
+        }
+
         //min ob1 + a * (ob2 + ob3)
         public static Solution z1Min(ArrayList solutions)
         {

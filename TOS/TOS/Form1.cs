@@ -61,11 +61,18 @@ namespace TOS
         {
             ArrayList restSolution = allSolution;
             ArrayList paretos = new ArrayList();
-            Solution pareto = new Solution();
             DateTime beginTime = System.DateTime.Now;
-
+            Solution pareto = Find.z3Min(restSolution);
+            paretos.Add(pareto);
+            while (true)
+            {
+                pareto = Find.z3Min(restSolution, paretos);
+                if (Find.z3Min(restSolution, paretos).ob3 == 1)
+                    break;
+                paretos.Add(pareto);
+            }
             DateTime endTime = System.DateTime.Now;
-            epslonCUTBox.Text = (endTime - beginTime).TotalSeconds.ToString();
+            epslonBox.Text = (endTime - beginTime).TotalSeconds.ToString();
             Console.WriteLine("epslon： " + paretos.Count);
         }
 
@@ -99,10 +106,10 @@ namespace TOS
         //每步都CUT的epslon约束法
         private void epslonCUTBTN_Click(object sender, EventArgs e)
         {
-            ArrayList restSolution = allSolution;         
+            ArrayList restSolution = allSolution;
             ArrayList paretos = new ArrayList();
             Solution pareto = new Solution();
-            DateTime beginTime = System.DateTime.Now;          
+            DateTime beginTime = System.DateTime.Now;
             while (restSolution.Count != 0)
             {
                 pareto = Find.z3Min(restSolution);
