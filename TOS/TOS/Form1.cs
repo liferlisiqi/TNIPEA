@@ -24,8 +24,10 @@ namespace TOS
             DateTime beginTime = System.DateTime.Now;
             SqlConnection conn = new SqlConnection("Data Source=USER-20160720BD;" +
                 "Initial Catalog=MO-benchmark-AP;Integrated Security=True");
+            //SqlConnection conn = new SqlConnection("Data Source=USER-20160720BD;" +
+            //    "Initial Catalog=MO-benchmark-AP;Integrated Security=True");
             DataTable dt = new DataTable();
-            string sql = "select sum,makespan,cv from [3-8-11]";
+            string sql = "select sum,makespan,cv from [3-8-10]";
             try
             {
                 conn.Open();
@@ -68,7 +70,7 @@ namespace TOS
             while (true)
             {
                 pareto = Find.z3Min(restSolution, paretos);
-                if (Find.z3Min(restSolution, paretos).ob3 == 1)
+                if (Find.z3Min(restSolution, paretos).ob3 == 2)
                     break;
                 paretos.Add(pareto);
             }
@@ -88,22 +90,19 @@ namespace TOS
             pareto = Find.z3Min(restSolution);
             restSolution = TOS.Select.nondominates(restSolution, pareto);
             paretos.Add(pareto);
-
-            pareto = Find.z1Min(restSolution);
-            restSolution = TOS.Select.nondominates(restSolution, pareto);
-            paretos.Add(pareto);
-
-            pareto = Find.z2Min(restSolution);
-            restSolution = TOS.Select.nondominates(restSolution, pareto);
-            paretos.Add(pareto);
-
+            Solution pareto1 = Find.z1Min(restSolution);
+            restSolution = TOS.Select.nondominates(restSolution, pareto1);          
+            Solution pareto2 = Find.z2Min(restSolution);
+            restSolution = TOS.Select.nondominates(restSolution, pareto2);           
             while (true)
             {
                 pareto = Find.z3Min(restSolution, paretos);
-                if (Find.z3Min(restSolution, paretos).ob3 == 1)
+                if (Find.z3Min(restSolution, paretos).ob3 == 2)
                     break;
                 paretos.Add(pareto);
             }
+            paretos.Add(pareto1);
+            paretos.Add(pareto2);
 
             DateTime endTime = System.DateTime.Now;
             PCepslonBox.Text = (endTime - beginTime).TotalSeconds.ToString();
