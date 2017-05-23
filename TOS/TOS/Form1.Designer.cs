@@ -1,6 +1,6 @@
 ﻿namespace TOS
 {
-    partial class Form1
+    partial class myForm
     {
         /// <summary>
         /// 必需的设计器变量。
@@ -39,6 +39,10 @@
             this.PCepslonBox = new System.Windows.Forms.TextBox();
             this.epslonCUTBox = new System.Windows.Forms.TextBox();
             this.PCECBox = new System.Windows.Forms.TextBox();
+            this.ICECBTN = new System.Windows.Forms.Button();
+            this.ICECBox = new System.Windows.Forms.TextBox();
+            this.PIECBTN = new System.Windows.Forms.Button();
+            this.PIECBox = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // readDataBTN
@@ -93,7 +97,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(216, 269);
+            this.label1.Location = new System.Drawing.Point(222, 398);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(41, 12);
             this.label1.TabIndex = 5;
@@ -134,11 +138,49 @@
             this.PCECBox.Size = new System.Drawing.Size(100, 21);
             this.PCECBox.TabIndex = 10;
             // 
-            // Form1
+            // ICECBTN
+            // 
+            this.ICECBTN.Location = new System.Drawing.Point(41, 288);
+            this.ICECBTN.Name = "ICECBTN";
+            this.ICECBTN.Size = new System.Drawing.Size(75, 23);
+            this.ICECBTN.TabIndex = 12;
+            this.ICECBTN.Text = "理CUT+ECUT";
+            this.ICECBTN.UseVisualStyleBackColor = true;
+            this.ICECBTN.Click += new System.EventHandler(this.ICECBTN_Click);
+            // 
+            // ICECBox
+            // 
+            this.ICECBox.Location = new System.Drawing.Point(195, 288);
+            this.ICECBox.Name = "ICECBox";
+            this.ICECBox.Size = new System.Drawing.Size(100, 21);
+            this.ICECBox.TabIndex = 13;
+            // 
+            // PIECBTN
+            // 
+            this.PIECBTN.Location = new System.Drawing.Point(41, 342);
+            this.PIECBTN.Name = "PIECBTN";
+            this.PIECBTN.Size = new System.Drawing.Size(121, 23);
+            this.PIECBTN.TabIndex = 14;
+            this.PIECBTN.Text = "极CUT+理CUT+ECUT";
+            this.PIECBTN.UseVisualStyleBackColor = true;
+            this.PIECBTN.Click += new System.EventHandler(this.PIECBTN_Click);
+            // 
+            // PIECBox
+            // 
+            this.PIECBox.Location = new System.Drawing.Point(195, 342);
+            this.PIECBox.Name = "PIECBox";
+            this.PIECBox.Size = new System.Drawing.Size(100, 21);
+            this.PIECBox.TabIndex = 15;
+            // 
+            // PIEC
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(325, 307);
+            this.ClientSize = new System.Drawing.Size(325, 531);
+            this.Controls.Add(this.PIECBox);
+            this.Controls.Add(this.PIECBTN);
+            this.Controls.Add(this.ICECBox);
+            this.Controls.Add(this.ICECBTN);
             this.Controls.Add(this.PCECBox);
             this.Controls.Add(this.epslonCUTBox);
             this.Controls.Add(this.PCepslonBox);
@@ -150,7 +192,7 @@
             this.Controls.Add(this.poleEpslonBTN);
             this.Controls.Add(this.epslonBTN);
             this.Controls.Add(this.readDataBTN);
-            this.Name = "Form1";
+            this.Name = "PIEC";
             this.Text = "Form1";
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -170,6 +212,10 @@
         private System.Windows.Forms.TextBox PCepslonBox;
         private System.Windows.Forms.TextBox epslonCUTBox;
         private System.Windows.Forms.TextBox PCECBox;
+        private System.Windows.Forms.Button ICECBTN;
+        private System.Windows.Forms.TextBox ICECBox;
+        private System.Windows.Forms.Button PIECBTN;
+        private System.Windows.Forms.TextBox PIECBox;
     }
 }
 

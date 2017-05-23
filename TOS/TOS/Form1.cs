@@ -11,10 +11,10 @@ using System.Collections;
 using System.Data.SqlClient;
 namespace TOS
 {
-    public partial class Form1 : Form
+    public partial class myForm : Form
     {
         ArrayList allSolution = new ArrayList();
-        public Form1()
+        public myForm()
         {
             InitializeComponent();
         }
@@ -27,7 +27,7 @@ namespace TOS
             //SqlConnection conn = new SqlConnection("Data Source=USER-20160720BD;" +
             //    "Initial Catalog=MO-benchmark-AP;Integrated Security=True");
             DataTable dt = new DataTable();
-            string sql = "select sum,makespan,cv from [3-8-10]";
+            string sql = "select sum,makespan,cv from [3-7-1]";
             try
             {
                 conn.Open();
@@ -54,7 +54,7 @@ namespace TOS
             }
 
             DateTime endTime = System.DateTime.Now;
-            readDataBox.Text = (endTime - beginTime).TotalSeconds.ToString();
+            readDataBox.Text = (endTime - beginTime).TotalMilliseconds.ToString();
             //NPOIHelper.outputExcel(allSolution, "D:/源码/多目标精确算法/多目标benchmark/GAP/3-8-11.xlsx");
             MessageBox.Show("ok");
         }
@@ -75,7 +75,7 @@ namespace TOS
                 paretos.Add(pareto);
             }
             DateTime endTime = System.DateTime.Now;
-            epslonBox.Text = (endTime - beginTime).TotalSeconds.ToString();
+            epslonBox.Text = (endTime - beginTime).TotalMilliseconds.ToString();
             Console.WriteLine("epslon： " + paretos.Count);
         }
 
@@ -105,7 +105,7 @@ namespace TOS
             paretos.Add(pareto2);
 
             DateTime endTime = System.DateTime.Now;
-            PCepslonBox.Text = (endTime - beginTime).TotalSeconds.ToString();
+            PCepslonBox.Text = (endTime - beginTime).TotalMilliseconds.ToString();
             Console.WriteLine("PCepslon： " + paretos.Count);
         }
 
@@ -123,7 +123,7 @@ namespace TOS
                 paretos.Add(pareto);
             }
             DateTime endTime = System.DateTime.Now;
-            epslonCUTBox.Text = (endTime - beginTime).TotalSeconds.ToString();
+            epslonCUTBox.Text = (endTime - beginTime).TotalMilliseconds.ToString();
             Console.WriteLine("epslonCUT： " + paretos.Count);
             //NPOIHelper.outputExcel(paretos, "D:/源码/多目标精确算法/多目标benchmark/GAP/3-8-11p.xls");
         }
@@ -155,9 +155,70 @@ namespace TOS
                 paretos.Add(pareto);
             }
             DateTime endTime = System.DateTime.Now;
-            PCECBox.Text = (endTime - beginTime).TotalSeconds.ToString();
-            Console.WriteLine("PCECBTN: " + paretos.Count);
+            PCECBox.Text = (endTime - beginTime).TotalMilliseconds.ToString();
+            Console.WriteLine("PCEC: " + paretos.Count);
         }
+
+        //先找到距理想点最近的Pareto进行CUT，再使用每步ParetoCUT
+        private void ICECBTN_Click(object sender, EventArgs e)
+        {
+            ArrayList restSolution = allSolution;
+            ArrayList paretos = new ArrayList();
+            Solution pareto = new Solution();
+            DateTime beginTime = System.DateTime.Now;
+
+            Solution ideal = Find.ideal(restSolution);
+            pareto = Find.nearest(restSolution, ideal);
+            restSolution = TOS.Select.nondominates(restSolution, pareto);
+            paretos.Add(pareto);
+
+            while (restSolution.Count != 0)
+            {
+                pareto = Find.z3Min(restSolution);
+                restSolution = TOS.Select.nondominates(restSolution, pareto);
+                paretos.Add(pareto);
+            }
+            DateTime endTime = System.DateTime.Now;
+            ICECBox.Text = (endTime - beginTime).TotalMilliseconds.ToString();
+            Console.WriteLine("ICEC: " + paretos.Count);
+        }
+
+        //先用极点CUT，再用最近点CUT，再每步CUT
+        private void PIECBTN_Click(object sender, EventArgs e)
+        {
+            ArrayList restSolution = allSolution;
+            ArrayList paretos = new ArrayList();
+            Solution pareto = new Solution();
+            DateTime beginTime = System.DateTime.Now;
+
+            pareto = Find.z3Min(restSolution);
+            restSolution = TOS.Select.nondominates(restSolution, pareto);
+            paretos.Add(pareto);
+
+            pareto = Find.z1Min(restSolution);
+            restSolution = TOS.Select.nondominates(restSolution, pareto);
+            paretos.Add(pareto);
+
+            pareto = Find.z2Min(restSolution);
+            restSolution = TOS.Select.nondominates(restSolution, pareto);
+            paretos.Add(pareto);
+
+            Solution ideal = Find.ideal(restSolution);
+            pareto = Find.nearest(restSolution, ideal);
+            restSolution = TOS.Select.nondominates(restSolution, pareto);
+            paretos.Add(pareto);
+
+            while (restSolution.Count != 0)
+            {
+                pareto = Find.z3Min(restSolution);
+                restSolution = TOS.Select.nondominates(restSolution, pareto);
+                paretos.Add(pareto);
+            }
+            DateTime endTime = System.DateTime.Now;
+            PIECBox.Text = (endTime - beginTime).TotalMilliseconds.ToString();
+            Console.WriteLine("PIEC: " + paretos.Count);
+        }
+
 
     }
 }
