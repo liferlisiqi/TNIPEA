@@ -79,8 +79,8 @@ namespace TOS
             foreach (Solution i in solutions)
             {
                 double distance = Math.Pow(ideal.ob1 - i.ob1, 2)
-                    + Math.Pow(ideal.ob1 - i.ob1, 2)
-                    + Math.Pow(ideal.ob1 - i.ob1, 2);
+                    + Math.Pow(ideal.ob2 - i.ob2, 2)
+                    + Math.Pow(ideal.ob3 - i.ob3, 2);
                 if (distance < nearestD)
                 {
                     nearestPoint = i;

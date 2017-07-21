@@ -99,9 +99,9 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(222, 398);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(41, 12);
+            this.label1.Size = new System.Drawing.Size(47, 12);
             this.label1.TabIndex = 5;
-            this.label1.Text = "时间/s";
+            this.label1.Text = "时间/ms";
             // 
             // readDataBox
             // 
@@ -172,7 +172,7 @@
             this.PIECBox.Size = new System.Drawing.Size(100, 21);
             this.PIECBox.TabIndex = 15;
             // 
-            // PIEC
+            // myForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -192,7 +192,7 @@
             this.Controls.Add(this.poleEpslonBTN);
             this.Controls.Add(this.epslonBTN);
             this.Controls.Add(this.readDataBTN);
-            this.Name = "PIEC";
+            this.Name = "myForm";
             this.Text = "Form1";
             this.ResumeLayout(false);
             this.PerformLayout();
