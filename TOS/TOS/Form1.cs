@@ -13,7 +13,7 @@ namespace TOS
 {
     public partial class myForm : Form
     {
-        ArrayList allSolution = new ArrayList();
+        ArrayList allSolutions = new ArrayList();
         public myForm()
         {
             InitializeComponent();
@@ -26,65 +26,35 @@ namespace TOS
             //readSubData("[5-16-1]", 5000000, 10000000);
             //readSubData(10000000, 15000000);
             DateTime endTime = System.DateTime.Now;
-            readDataBox.Text = (endTime - beginTime).TotalMilliseconds.ToString();
+            readDataBox.Text = (endTime - beginTime).TotalSeconds.ToString();
             //NPOIHelper.outputExcel(allSolution, "D:/源码/多目标精确算法/GAP benchmark 1/5-16-1.xls");
             MessageBox.Show("ok");
         }
 
         //epslon约束法
-        private void epslonBTN_Click(object sender, EventArgs e)
+        private void epslon_Click(object sender, EventArgs e)
         {
-            ArrayList restSolution = allSolution;
-            ArrayList paretos = new ArrayList();
+            ArrayList restSolutions = allSolutions;
+            ArrayList ParetoSet = new ArrayList();
             DateTime beginTime = System.DateTime.Now;
-            Solution pareto = Find.min3Pareto(restSolution);
-            paretos.Add(pareto);
+            Solution Pareto = Find.min3Pareto(restSolutions);
+            ParetoSet.Add(Pareto);
             while (true)
             {
-                pareto = Find.min3Pareto(restSolution, paretos);
-                if (Find.min3Pareto(restSolution, paretos).ob3 == 100)
+                Pareto = Find.min3Pareto(restSolutions, ParetoSet);
+                if (Find.min3Pareto(restSolutions, ParetoSet).ob3 == 1000)
                     break;
-                paretos.Add(pareto);
+                ParetoSet.Add(Pareto);
             }
             DateTime endTime = System.DateTime.Now;
-            epslonBox.Text = (endTime - beginTime).TotalMilliseconds.ToString();
-            Console.WriteLine("epslon： " + paretos.Count);
-        }
-
-        //极点Pareto剪切，epslon约束法
-        private void poleEpslonBTN_Click(object sender, EventArgs e)
-        {
-            ArrayList restSolution = allSolution;
-            ArrayList paretos = new ArrayList();
-            Solution pareto = new Solution();
-            DateTime beginTime = System.DateTime.Now;
-
-            pareto = Find.min3Pareto(restSolution);
-            restSolution = Find.ndSolutions(restSolution, pareto);
-            paretos.Add(pareto);
-            Solution pareto1 = Find.min1Pareto(restSolution);
-            restSolution = Find.ndSolutions(restSolution, pareto1);
-            Solution pareto2 = Find.min2Pareto(restSolution);
-            restSolution = Find.ndSolutions(restSolution, pareto2);
-            while (true)
-            {
-                pareto = Find.min3Pareto(restSolution, paretos);
-                if (Find.min3Pareto(restSolution, paretos).ob3 == 100)
-                    break;
-                paretos.Add(pareto);
-            }
-            paretos.Add(pareto1);
-            paretos.Add(pareto2);
-
-            DateTime endTime = System.DateTime.Now;
-            PCepslonBox.Text = (endTime - beginTime).TotalMilliseconds.ToString();
-            Console.WriteLine("PCepslon： " + paretos.Count);
+            epslonBox.Text = (endTime - beginTime).TotalSeconds.ToString();
+            Console.WriteLine("epslon： " + ParetoSet.Count);
         }
 
         //每步剪切
-        private void epslonCUTBTN_Click(object sender, EventArgs e)
+        private void EC_Click(object sender, EventArgs e)
         {
-            ArrayList restSolution = allSolution;
+            ArrayList restSolution = allSolutions;
             ArrayList paretos = new ArrayList();
             Solution pareto = new Solution();
             DateTime beginTime = System.DateTime.Now;
@@ -95,100 +65,126 @@ namespace TOS
                 paretos.Add(pareto);
             }
             DateTime endTime = System.DateTime.Now;
-            epslonCUTBox.Text = (endTime - beginTime).TotalMilliseconds.ToString();
+            ECBox.Text = (endTime - beginTime).TotalSeconds.ToString();
             Console.WriteLine("epslonCUT： " + paretos.Count);
             //NPOIHelper.outputExcel(paretos, "D:/源码/多目标精确算法/多目标benchmark/GAP/3-8-11p.xls");
         }
 
-        //极点Pareto剪切，每步剪切
-        private void PCECBTN_Click(object sender, EventArgs e)
+        //极点Pareto剪切，epslon约束法
+        private void PC_Click(object sender, EventArgs e)
         {
-            ArrayList restSolution = allSolution;
-            ArrayList paretos = new ArrayList();
-            Solution pareto = new Solution();
+            ArrayList restSolutions = allSolutions;
+            ArrayList ParetoSet = new ArrayList();
+            Solution Pareto = null;
             DateTime beginTime = System.DateTime.Now;
 
-            pareto = Find.min3Pareto(restSolution);
-            restSolution = Find.ndSolutions(restSolution, pareto);
-            paretos.Add(pareto);
-
-            pareto = Find.min1Pareto(restSolution);
-            restSolution = Find.ndSolutions(restSolution, pareto);
-            paretos.Add(pareto);
-
-            pareto = Find.min2Pareto(restSolution);
-            restSolution = Find.ndSolutions(restSolution, pareto);
-            paretos.Add(pareto);
-
-            while (restSolution.Count != 0)
+            Solution min3Pareto = Find.min3Pareto(restSolutions);
+            restSolutions = Find.ndSolutions(restSolutions, min3Pareto);
+            ParetoSet.Add(min3Pareto);
+            Solution min1Pareto = Find.min1Pareto(restSolutions);
+            restSolutions = Find.ndSolutions(restSolutions, min1Pareto);
+            Solution min2Pareto = Find.min2Pareto(restSolutions);
+            restSolutions = Find.ndSolutions(restSolutions, min2Pareto);
+            while (true)
             {
-                pareto = Find.min3Pareto(restSolution);
-                restSolution = Find.ndSolutions(restSolution, pareto);
-                paretos.Add(pareto);
+                Pareto = Find.min3Pareto(restSolutions, ParetoSet);
+                if (Find.min3Pareto(restSolutions, ParetoSet).ob3 == 1000)
+                    break;
+                ParetoSet.Add(Pareto);
             }
+            ParetoSet.Add(min1Pareto);
+            ParetoSet.Add(min2Pareto);
+
             DateTime endTime = System.DateTime.Now;
-            PCECBox.Text = (endTime - beginTime).TotalMilliseconds.ToString();
-            Console.WriteLine("PCEC: " + paretos.Count);
+            PCepslonBox.Text = (endTime - beginTime).TotalSeconds.ToString();
+            Console.WriteLine("PCepslon： " + ParetoSet.Count);
+        }
+
+        //极点Pareto剪切，每步剪切
+        private void PEC_Click(object sender, EventArgs e)
+        {
+            ArrayList restSolutions = allSolutions;
+            ArrayList ParetoSet = new ArrayList();
+            Solution Pareto = null;
+            DateTime beginTime = System.DateTime.Now;
+
+            Solution min3Pareto = Find.min3Pareto(restSolutions);
+            restSolutions = Find.ndSolutions(restSolutions, min3Pareto);
+            ParetoSet.Add(min3Pareto);
+            Solution min1Pareto = Find.min1Pareto(restSolutions);
+            restSolutions = Find.ndSolutions(restSolutions, min1Pareto);
+            ParetoSet.Add(min1Pareto);
+            Solution min2Pareto = Find.min2Pareto(restSolutions);
+            restSolutions = Find.ndSolutions(restSolutions, min2Pareto);
+            ParetoSet.Add(min2Pareto);
+
+            while (restSolutions.Count != 0)
+            {
+                Pareto = Find.min3Pareto(restSolutions);
+                restSolutions = Find.ndSolutions(restSolutions, Pareto);
+                ParetoSet.Add(Pareto);
+            }
+
+            DateTime endTime = System.DateTime.Now;
+            PCECBox.Text = (endTime - beginTime).TotalSeconds.ToString();
+            Console.WriteLine("PCEC: " + ParetoSet.Count);
         }
 
         //理想Pareto剪切，每步剪切
-        private void ICECBTN_Click(object sender, EventArgs e)
+        private void IEC_Click(object sender, EventArgs e)
         {
-            ArrayList restSolution = allSolution;
-            ArrayList paretos = new ArrayList();
-            Solution pareto = new Solution();
+            ArrayList restSolutions = allSolutions;
+            ArrayList ParetoSet = new ArrayList();
+            Solution Pareto = null;
             DateTime beginTime = System.DateTime.Now;
 
-            Solution ideal = Find.idealPoint(restSolution);
-            pareto = Find.idealPareto(restSolution, ideal);
-            restSolution = Find.ndSolutions(restSolution, pareto);
-            paretos.Add(pareto);
+            Solution idealPareto = Find.idealPareto(restSolutions);
+            restSolutions = Find.ndSolutions(restSolutions, idealPareto);
+            ParetoSet.Add(idealPareto);
 
-            while (restSolution.Count != 0)
+            while (restSolutions.Count != 0)
             {
-                pareto = Find.min3Pareto(restSolution);
-                restSolution = Find.ndSolutions(restSolution, pareto);
-                paretos.Add(pareto);
+                Pareto = Find.min3Pareto(restSolutions);
+                restSolutions = Find.ndSolutions(restSolutions, Pareto);
+                ParetoSet.Add(Pareto);
             }
             DateTime endTime = System.DateTime.Now;
-            ICECBox.Text = (endTime - beginTime).TotalMilliseconds.ToString();
-            Console.WriteLine("ICEC: " + paretos.Count);
+            ICECBox.Text = (endTime - beginTime).TotalSeconds.ToString();
+            Console.WriteLine("ICEC: " + ParetoSet.Count);
         }
 
         //极点Pareto剪切，理想Pareto剪切，每步CUT
-        private void PIECBTN_Click(object sender, EventArgs e)
+        private void PIEC_Click(object sender, EventArgs e)
         {
-            ArrayList restSolution = allSolution;
-            ArrayList paretos = new ArrayList();
-            Solution pareto = new Solution();
+            ArrayList restSolutions = allSolutions;
+            ArrayList ParetoSet = new ArrayList();
+            Solution Pareto = null;
             DateTime beginTime = System.DateTime.Now;
 
-            pareto = Find.min3Pareto(restSolution);
-            restSolution = Find.ndSolutions(restSolution, pareto);
-            paretos.Add(pareto);
+            Solution min3Pareto = Find.min3Pareto(restSolutions);
+            restSolutions = Find.ndSolutions(restSolutions, min3Pareto);
+            ParetoSet.Add(min3Pareto);
+            Solution min1Pareto = Find.min1Pareto(restSolutions);
+            restSolutions = Find.ndSolutions(restSolutions, min1Pareto);
+            ParetoSet.Add(min1Pareto);
+            Solution min2Pareto = Find.min2Pareto(restSolutions);
+            restSolutions = Find.ndSolutions(restSolutions, min2Pareto);
+            ParetoSet.Add(min2Pareto);
 
-            pareto = Find.min1Pareto(restSolution);
-            restSolution = Find.ndSolutions(restSolution, pareto);
-            paretos.Add(pareto);
+            Solution idealPoint = new Solution(min1Pareto.ob1, min2Pareto.ob2, min3Pareto.ob3);
+            Solution idealPareto = Find.idealPareto(restSolutions, idealPoint);
+            restSolutions = Find.ndSolutions(restSolutions, idealPareto);
+            ParetoSet.Add(idealPareto);
 
-            pareto = Find.min2Pareto(restSolution);
-            restSolution = Find.ndSolutions(restSolution, pareto);
-            paretos.Add(pareto);
-
-            Solution ideal = Find.idealPoint(restSolution);
-            pareto = Find.idealPareto(restSolution, ideal);
-            restSolution = Find.ndSolutions(restSolution, pareto);
-            paretos.Add(pareto);
-
-            while (restSolution.Count != 0)
+            while (restSolutions.Count != 0)
             {
-                pareto = Find.min3Pareto(restSolution);
-                restSolution = Find.ndSolutions(restSolution, pareto);
-                paretos.Add(pareto);
+                Pareto = Find.min3Pareto(restSolutions);
+                restSolutions = Find.ndSolutions(restSolutions, Pareto);
+                ParetoSet.Add(Pareto);
             }
             DateTime endTime = System.DateTime.Now;
-            PIECBox.Text = (endTime - beginTime).TotalMilliseconds.ToString();
-            Console.WriteLine("PIEC: " + paretos.Count);
+            PIECBox.Text = (endTime - beginTime).TotalSeconds.ToString();
+            Console.WriteLine("PIEC: " + ParetoSet.Count);
         }
 
         private void readSubData(String tablename, int lo, int hi)
@@ -219,7 +215,7 @@ namespace TOS
                    Convert.ToDouble(dt.Rows[i][0].ToString()),
                    Convert.ToDouble(dt.Rows[i][1].ToString()),
                    Convert.ToDouble(dt.Rows[i][2].ToString()),);
-                allSolution.Add(solution);
+                allSolutions.Add(solution);
             }
         }
     }

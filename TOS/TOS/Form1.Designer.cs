@@ -37,7 +37,7 @@
             this.readDataBox = new System.Windows.Forms.TextBox();
             this.epslonBox = new System.Windows.Forms.TextBox();
             this.PCepslonBox = new System.Windows.Forms.TextBox();
-            this.epslonCUTBox = new System.Windows.Forms.TextBox();
+            this.ECBox = new System.Windows.Forms.TextBox();
             this.PCECBox = new System.Windows.Forms.TextBox();
             this.ICECBTN = new System.Windows.Forms.Button();
             this.ICECBox = new System.Windows.Forms.TextBox();
@@ -61,96 +61,96 @@
             this.epslonBTN.Name = "epslonBTN";
             this.epslonBTN.Size = new System.Drawing.Size(75, 23);
             this.epslonBTN.TabIndex = 1;
-            this.epslonBTN.Text = "Epslon";
+            this.epslonBTN.Text = "epslon";
             this.epslonBTN.UseVisualStyleBackColor = true;
-            this.epslonBTN.Click += new System.EventHandler(this.epslonBTN_Click);
+            this.epslonBTN.Click += new System.EventHandler(this.epslon_Click);
             // 
             // poleEpslonBTN
             // 
-            this.poleEpslonBTN.Location = new System.Drawing.Point(41, 131);
+            this.poleEpslonBTN.Location = new System.Drawing.Point(41, 184);
             this.poleEpslonBTN.Name = "poleEpslonBTN";
-            this.poleEpslonBTN.Size = new System.Drawing.Size(106, 22);
+            this.poleEpslonBTN.Size = new System.Drawing.Size(75, 22);
             this.poleEpslonBTN.TabIndex = 2;
-            this.poleEpslonBTN.Text = "极点CUT+Epslon";
+            this.poleEpslonBTN.Text = "PC";
             this.poleEpslonBTN.UseVisualStyleBackColor = true;
-            this.poleEpslonBTN.Click += new System.EventHandler(this.poleEpslonBTN_Click);
+            this.poleEpslonBTN.Click += new System.EventHandler(this.PC_Click);
             // 
             // epslonCUTBTN
             // 
-            this.epslonCUTBTN.Location = new System.Drawing.Point(41, 183);
+            this.epslonCUTBTN.Location = new System.Drawing.Point(41, 131);
             this.epslonCUTBTN.Name = "epslonCUTBTN";
             this.epslonCUTBTN.Size = new System.Drawing.Size(75, 23);
             this.epslonCUTBTN.TabIndex = 11;
-            this.epslonCUTBTN.Text = "EpslonCUT";
-            this.epslonCUTBTN.Click += new System.EventHandler(this.epslonCUTBTN_Click);
+            this.epslonCUTBTN.Text = "EC";
+            this.epslonCUTBTN.Click += new System.EventHandler(this.EC_Click);
             // 
             // PCECBTN
             // 
             this.PCECBTN.Location = new System.Drawing.Point(41, 236);
             this.PCECBTN.Name = "PCECBTN";
-            this.PCECBTN.Size = new System.Drawing.Size(121, 23);
+            this.PCECBTN.Size = new System.Drawing.Size(75, 23);
             this.PCECBTN.TabIndex = 4;
-            this.PCECBTN.Text = "极点CUT+EpslonCUT";
+            this.PCECBTN.Text = "PEC";
             this.PCECBTN.UseVisualStyleBackColor = true;
-            this.PCECBTN.Click += new System.EventHandler(this.PCECBTN_Click);
+            this.PCECBTN.Click += new System.EventHandler(this.PEC_Click);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(222, 398);
+            this.label1.Location = new System.Drawing.Point(206, 380);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(47, 12);
+            this.label1.Size = new System.Drawing.Size(41, 12);
             this.label1.TabIndex = 5;
-            this.label1.Text = "时间/ms";
+            this.label1.Text = "时间/s";
             // 
             // readDataBox
             // 
-            this.readDataBox.Location = new System.Drawing.Point(195, 27);
+            this.readDataBox.Location = new System.Drawing.Point(179, 27);
             this.readDataBox.Name = "readDataBox";
             this.readDataBox.Size = new System.Drawing.Size(100, 21);
             this.readDataBox.TabIndex = 6;
             // 
             // epslonBox
             // 
-            this.epslonBox.Location = new System.Drawing.Point(195, 79);
+            this.epslonBox.Location = new System.Drawing.Point(179, 80);
             this.epslonBox.Name = "epslonBox";
             this.epslonBox.Size = new System.Drawing.Size(100, 21);
             this.epslonBox.TabIndex = 7;
             // 
             // PCepslonBox
             // 
-            this.PCepslonBox.Location = new System.Drawing.Point(195, 131);
+            this.PCepslonBox.Location = new System.Drawing.Point(179, 184);
             this.PCepslonBox.Name = "PCepslonBox";
             this.PCepslonBox.Size = new System.Drawing.Size(100, 21);
             this.PCepslonBox.TabIndex = 8;
             // 
-            // epslonCUTBox
+            // ECBox
             // 
-            this.epslonCUTBox.Location = new System.Drawing.Point(195, 183);
-            this.epslonCUTBox.Name = "epslonCUTBox";
-            this.epslonCUTBox.Size = new System.Drawing.Size(100, 21);
-            this.epslonCUTBox.TabIndex = 9;
+            this.ECBox.Location = new System.Drawing.Point(179, 132);
+            this.ECBox.Name = "ECBox";
+            this.ECBox.Size = new System.Drawing.Size(100, 21);
+            this.ECBox.TabIndex = 9;
             // 
             // PCECBox
             // 
-            this.PCECBox.Location = new System.Drawing.Point(195, 235);
+            this.PCECBox.Location = new System.Drawing.Point(179, 237);
             this.PCECBox.Name = "PCECBox";
             this.PCECBox.Size = new System.Drawing.Size(100, 21);
             this.PCECBox.TabIndex = 10;
             // 
             // ICECBTN
             // 
-            this.ICECBTN.Location = new System.Drawing.Point(41, 288);
+            this.ICECBTN.Location = new System.Drawing.Point(41, 289);
             this.ICECBTN.Name = "ICECBTN";
             this.ICECBTN.Size = new System.Drawing.Size(75, 23);
             this.ICECBTN.TabIndex = 12;
-            this.ICECBTN.Text = "理CUT+ECUT";
+            this.ICECBTN.Text = "IEC";
             this.ICECBTN.UseVisualStyleBackColor = true;
-            this.ICECBTN.Click += new System.EventHandler(this.ICECBTN_Click);
+            this.ICECBTN.Click += new System.EventHandler(this.IEC_Click);
             // 
             // ICECBox
             // 
-            this.ICECBox.Location = new System.Drawing.Point(195, 288);
+            this.ICECBox.Location = new System.Drawing.Point(179, 289);
             this.ICECBox.Name = "ICECBox";
             this.ICECBox.Size = new System.Drawing.Size(100, 21);
             this.ICECBox.TabIndex = 13;
@@ -159,15 +159,15 @@
             // 
             this.PIECBTN.Location = new System.Drawing.Point(41, 342);
             this.PIECBTN.Name = "PIECBTN";
-            this.PIECBTN.Size = new System.Drawing.Size(121, 23);
+            this.PIECBTN.Size = new System.Drawing.Size(75, 23);
             this.PIECBTN.TabIndex = 14;
-            this.PIECBTN.Text = "极CUT+理CUT+ECUT";
+            this.PIECBTN.Text = "PIEC";
             this.PIECBTN.UseVisualStyleBackColor = true;
-            this.PIECBTN.Click += new System.EventHandler(this.PIECBTN_Click);
+            this.PIECBTN.Click += new System.EventHandler(this.PIEC_Click);
             // 
             // PIECBox
             // 
-            this.PIECBox.Location = new System.Drawing.Point(195, 342);
+            this.PIECBox.Location = new System.Drawing.Point(179, 342);
             this.PIECBox.Name = "PIECBox";
             this.PIECBox.Size = new System.Drawing.Size(100, 21);
             this.PIECBox.TabIndex = 15;
@@ -176,13 +176,13 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(325, 531);
+            this.ClientSize = new System.Drawing.Size(325, 454);
             this.Controls.Add(this.PIECBox);
             this.Controls.Add(this.PIECBTN);
             this.Controls.Add(this.ICECBox);
             this.Controls.Add(this.ICECBTN);
             this.Controls.Add(this.PCECBox);
-            this.Controls.Add(this.epslonCUTBox);
+            this.Controls.Add(this.ECBox);
             this.Controls.Add(this.PCepslonBox);
             this.Controls.Add(this.epslonBox);
             this.Controls.Add(this.readDataBox);
@@ -210,7 +210,7 @@
         private System.Windows.Forms.TextBox readDataBox;
         private System.Windows.Forms.TextBox epslonBox;
         private System.Windows.Forms.TextBox PCepslonBox;
-        private System.Windows.Forms.TextBox epslonCUTBox;
+        private System.Windows.Forms.TextBox ECBox;
         private System.Windows.Forms.TextBox PCECBox;
         private System.Windows.Forms.Button ICECBTN;
         private System.Windows.Forms.TextBox ICECBox;
