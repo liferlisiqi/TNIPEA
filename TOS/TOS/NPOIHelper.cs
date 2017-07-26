@@ -12,15 +12,15 @@ namespace TOS
 {
     class NPOIHelper
     {
-        public static void outputExcel(ArrayList solutionSet, string filename)
+        public static void outputExcel(ArrayList solutions, string filename)
         {
             HSSFWorkbook WorkBook = new HSSFWorkbook();
             ISheet Sheet = WorkBook.CreateSheet();
 
-            for (int i = 0; i < solutionSet.Count; i++)
+            for (int i = 262139; i < solutions.Count; i++)
             {
-                Solution Solution = (Solution)solutionSet[i];
-                IRow Row = Sheet.CreateRow(i);
+                Solution Solution = (Solution)solutions[i];
+                IRow Row = Sheet.CreateRow(i - 262139);
                 Row.CreateCell(0).SetCellValue(Solution.ob1);
                 Row.CreateCell(1).SetCellValue(Solution.ob2);
                 Row.CreateCell(2).SetCellValue(Solution.ob3);

@@ -29,21 +29,16 @@ namespace TOS
             this.sum = ob1 + ob2 + ob3;
         }
 
-        //判断this是否支配solution，三个目标都>=，且其中至少一个是紧的
+        //判断this是否支配solution
         public bool dominate(Solution solution)
         {
-            if (this.ob1 <= solution.ob1 && this.ob2 <= solution.ob2 && this.ob3 <= solution.ob3 && this.sum < solution.sum)
-                return true;
-            else
-                return false;
+            return (this.ob1 <= solution.ob1 && this.ob2 <= solution.ob2 && this.ob3 <= solution.ob3 && this.sum < solution.sum);
         }
 
+        //判断两个解是否重合
         public bool equal(Solution solution)
         {
-            if (this.ob1 == solution.ob1 && this.ob2 == solution.ob2 && this.ob3 == solution.ob3)
-                return true;
-            else
-                return false;
+            return (this.ob1 == solution.ob1 && this.ob2 == solution.ob2 && this.ob3 == solution.ob3);
         }
     }
 }

@@ -22,12 +22,12 @@ namespace TOS
         private void readDataBTN_Click(object sender, EventArgs e)
         {
             DateTime beginTime = System.DateTime.Now;
-            
-            readSubData(0, 5000000);
-            readSubData(5000000, 10000000);
+            readSubData("[5-15-1]", 0, 5000000);
+            //readSubData("[5-16-1]", 5000000, 10000000);
+            //readSubData(10000000, 15000000);
             DateTime endTime = System.DateTime.Now;
             readDataBox.Text = (endTime - beginTime).TotalMilliseconds.ToString();
-            //NPOIHelper.outputExcel(allSolution, "D:/源码/多目标精确算法/多目标benchmark/GAP/3-8-11.xlsx");
+            //NPOIHelper.outputExcel(allSolution, "D:/源码/多目标精确算法/GAP benchmark 1/5-16-1.xls");
             MessageBox.Show("ok");
         }
 
@@ -37,12 +37,12 @@ namespace TOS
             ArrayList restSolution = allSolution;
             ArrayList paretos = new ArrayList();
             DateTime beginTime = System.DateTime.Now;
-            Solution pareto = Find.z3Min(restSolution);
+            Solution pareto = Find.min3Pareto(restSolution);
             paretos.Add(pareto);
             while (true)
             {
-                pareto = Find.z3Min(restSolution, paretos);
-                if (Find.z3Min(restSolution, paretos).ob3 == 2)
+                pareto = Find.min3Pareto(restSolution, paretos);
+                if (Find.min3Pareto(restSolution, paretos).ob3 == 100)
                     break;
                 paretos.Add(pareto);
             }
@@ -59,17 +59,17 @@ namespace TOS
             Solution pareto = new Solution();
             DateTime beginTime = System.DateTime.Now;
 
-            pareto = Find.z3Min(restSolution);
-            restSolution = TOS.Select.nondominates(restSolution, pareto);
+            pareto = Find.min3Pareto(restSolution);
+            restSolution = Find.ndSolutions(restSolution, pareto);
             paretos.Add(pareto);
-            Solution pareto1 = Find.z1Min(restSolution);
-            restSolution = TOS.Select.nondominates(restSolution, pareto1);
-            Solution pareto2 = Find.z2Min(restSolution);
-            restSolution = TOS.Select.nondominates(restSolution, pareto2);
+            Solution pareto1 = Find.min1Pareto(restSolution);
+            restSolution = Find.ndSolutions(restSolution, pareto1);
+            Solution pareto2 = Find.min2Pareto(restSolution);
+            restSolution = Find.ndSolutions(restSolution, pareto2);
             while (true)
             {
-                pareto = Find.z3Min(restSolution, paretos);
-                if (Find.z3Min(restSolution, paretos).ob3 == 2)
+                pareto = Find.min3Pareto(restSolution, paretos);
+                if (Find.min3Pareto(restSolution, paretos).ob3 == 100)
                     break;
                 paretos.Add(pareto);
             }
@@ -90,8 +90,8 @@ namespace TOS
             DateTime beginTime = System.DateTime.Now;
             while (restSolution.Count != 0)
             {
-                pareto = Find.z3Min(restSolution);
-                restSolution = TOS.Select.nondominates(restSolution, pareto);
+                pareto = Find.min3Pareto(restSolution);
+                restSolution = Find.ndSolutions(restSolution, pareto);
                 paretos.Add(pareto);
             }
             DateTime endTime = System.DateTime.Now;
@@ -108,22 +108,22 @@ namespace TOS
             Solution pareto = new Solution();
             DateTime beginTime = System.DateTime.Now;
 
-            pareto = Find.z3Min(restSolution);
-            restSolution = TOS.Select.nondominates(restSolution, pareto);
+            pareto = Find.min3Pareto(restSolution);
+            restSolution = Find.ndSolutions(restSolution, pareto);
             paretos.Add(pareto);
 
-            pareto = Find.z1Min(restSolution);
-            restSolution = TOS.Select.nondominates(restSolution, pareto);
+            pareto = Find.min1Pareto(restSolution);
+            restSolution = Find.ndSolutions(restSolution, pareto);
             paretos.Add(pareto);
 
-            pareto = Find.z2Min(restSolution);
-            restSolution = TOS.Select.nondominates(restSolution, pareto);
+            pareto = Find.min2Pareto(restSolution);
+            restSolution = Find.ndSolutions(restSolution, pareto);
             paretos.Add(pareto);
 
             while (restSolution.Count != 0)
             {
-                pareto = Find.z3Min(restSolution);
-                restSolution = TOS.Select.nondominates(restSolution, pareto);
+                pareto = Find.min3Pareto(restSolution);
+                restSolution = Find.ndSolutions(restSolution, pareto);
                 paretos.Add(pareto);
             }
             DateTime endTime = System.DateTime.Now;
@@ -139,15 +139,15 @@ namespace TOS
             Solution pareto = new Solution();
             DateTime beginTime = System.DateTime.Now;
 
-            Solution ideal = Find.ideal(restSolution);
-            pareto = Find.nearest(restSolution, ideal);
-            restSolution = TOS.Select.nondominates(restSolution, pareto);
+            Solution ideal = Find.idealPoint(restSolution);
+            pareto = Find.idealPareto(restSolution, ideal);
+            restSolution = Find.ndSolutions(restSolution, pareto);
             paretos.Add(pareto);
 
             while (restSolution.Count != 0)
             {
-                pareto = Find.z3Min(restSolution);
-                restSolution = TOS.Select.nondominates(restSolution, pareto);
+                pareto = Find.min3Pareto(restSolution);
+                restSolution = Find.ndSolutions(restSolution, pareto);
                 paretos.Add(pareto);
             }
             DateTime endTime = System.DateTime.Now;
@@ -163,27 +163,27 @@ namespace TOS
             Solution pareto = new Solution();
             DateTime beginTime = System.DateTime.Now;
 
-            pareto = Find.z3Min(restSolution);
-            restSolution = TOS.Select.nondominates(restSolution, pareto);
+            pareto = Find.min3Pareto(restSolution);
+            restSolution = Find.ndSolutions(restSolution, pareto);
             paretos.Add(pareto);
 
-            pareto = Find.z1Min(restSolution);
-            restSolution = TOS.Select.nondominates(restSolution, pareto);
+            pareto = Find.min1Pareto(restSolution);
+            restSolution = Find.ndSolutions(restSolution, pareto);
             paretos.Add(pareto);
 
-            pareto = Find.z2Min(restSolution);
-            restSolution = TOS.Select.nondominates(restSolution, pareto);
+            pareto = Find.min2Pareto(restSolution);
+            restSolution = Find.ndSolutions(restSolution, pareto);
             paretos.Add(pareto);
 
-            Solution ideal = Find.ideal(restSolution);
-            pareto = Find.nearest(restSolution, ideal);
-            restSolution = TOS.Select.nondominates(restSolution, pareto);
+            Solution ideal = Find.idealPoint(restSolution);
+            pareto = Find.idealPareto(restSolution, ideal);
+            restSolution = Find.ndSolutions(restSolution, pareto);
             paretos.Add(pareto);
 
             while (restSolution.Count != 0)
             {
-                pareto = Find.z3Min(restSolution);
-                restSolution = TOS.Select.nondominates(restSolution, pareto);
+                pareto = Find.min3Pareto(restSolution);
+                restSolution = Find.ndSolutions(restSolution, pareto);
                 paretos.Add(pareto);
             }
             DateTime endTime = System.DateTime.Now;
@@ -191,12 +191,12 @@ namespace TOS
             Console.WriteLine("PIEC: " + paretos.Count);
         }
 
-        private void readSubData(int lo, int hi)
+        private void readSubData(String tablename, int lo, int hi)
         {
             SqlConnection conn = new SqlConnection("Data Source=USER-20160720BD;"
                 + "Initial Catalog=MNGAPbenchmark;Integrated Security=True");
             DataTable dt = new DataTable();
-            string sql = "select makespan,totaltime,CV from [5-17-1] where ID > " + lo + " and ID <= " + hi;
+            string sql = "select totaltime,totalcost,timeCV,costCV from " + tablename + " where ID > " + lo + " and ID <= " + hi;
             try
             {
                 conn.Open();
@@ -218,7 +218,7 @@ namespace TOS
                 Solution solution = new Solution(
                    Convert.ToDouble(dt.Rows[i][0].ToString()),
                    Convert.ToDouble(dt.Rows[i][1].ToString()),
-                   Convert.ToDouble(dt.Rows[i][2].ToString()));
+                   Convert.ToDouble(dt.Rows[i][2].ToString()),);
                 allSolution.Add(solution);
             }
         }

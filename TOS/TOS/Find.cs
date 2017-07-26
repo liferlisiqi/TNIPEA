@@ -10,25 +10,24 @@ namespace TOS
     class Find
     {
         //min ob3 + a * (ob2 + ob1)
-        public static Solution z3Min(ArrayList solutions)
+        public static Solution min3Pareto(ArrayList solutions)
         {
-            Solution pareto = new Solution(200, 21, 2);
+            Solution pareto = new Solution(400, 200, 100);
             foreach (Solution i in solutions)
                 pareto = i.z3 < pareto.z3 ? i : pareto;
             return pareto;
         }
 
         //用于epslon
-        public static Solution z3Min(ArrayList solutions, ArrayList paretos)
+        public static Solution min3Pareto(ArrayList solutions, ArrayList paretos)
         {
-            Solution pareto = new Solution(200, 21, 2);
+            Solution pareto = new Solution(400, 200, 100);
             foreach (Solution i in solutions)
             {
                 bool flag = true;
                 foreach (Solution j in paretos)
                 {
                     if (!(i.ob1 < j.ob1 || i.ob2 < j.ob2))
-                    //if (j.dominate(i)||j.equal(i))
                     {
                         flag = false;
                         break;
@@ -41,27 +40,27 @@ namespace TOS
         }
 
         //min ob1 + a * (ob2 + ob3)
-        public static Solution z1Min(ArrayList solutions)
+        public static Solution min1Pareto(ArrayList solutions)
         {
-            Solution pareto = new Solution(200, 21, 2);
+            Solution pareto = new Solution(400, 200, 100);
             foreach (Solution i in solutions)
                 pareto = i.z1 < pareto.z1 ? i : pareto;
             return pareto;
         }
 
         //min ob2 + a * (ob1 + ob3)
-        public static Solution z2Min(ArrayList solutions)
+        public static Solution min2Pareto(ArrayList solutions)
         {
-            Solution pareto = new Solution(200, 21, 2);
+            Solution pareto = new Solution(400, 200, 100);
             foreach (Solution i in solutions)
                 pareto = i.z2 < pareto.z2 ? i : pareto;
             return pareto;
         }
 
-        //找到三个目标的最小值，返回理想点
-        public static Solution ideal(ArrayList solutions)
+        //找理想点
+        public static Solution idealPoint(ArrayList solutions)
         {
-            Solution idealPoint = new Solution(200, 200, 2);
+            Solution idealPoint = new Solution(400, 200, 100);
             foreach (Solution i in solutions)
             {
                 if (idealPoint.ob1 > i.ob1) idealPoint.ob1 = i.ob1;
@@ -71,10 +70,10 @@ namespace TOS
             return idealPoint;
         }
 
-        //找到距理想点最近的点
-        public static Solution nearest(ArrayList solutions, Solution ideal)
+        //找理想点Pareto
+        public static Solution idealPareto(ArrayList solutions, Solution ideal)
         {
-            Solution nearestPoint = new Solution();
+            Solution idealPareto = new Solution();
             double nearestD = double.MaxValue;
             foreach (Solution i in solutions)
             {
@@ -83,11 +82,23 @@ namespace TOS
                     + Math.Pow(ideal.ob3 - i.ob3, 2);
                 if (distance < nearestD)
                 {
-                    nearestPoint = i;
+                    idealPareto = i;
                     nearestD = distance;
                 }
             }
-            return nearestPoint;
+            return idealPareto;
+        }
+
+        //寻找不被给定Pareto支配的解
+        public static ArrayList ndSolutions(ArrayList solutions, Solution pareto)
+        {
+            ArrayList ndSolutions = new ArrayList();
+            foreach (Solution i in solutions)
+            {
+                if (!pareto.dominate(i) && !pareto.equal(i))
+                    ndSolutions.Add(i);
+            }
+            return ndSolutions;
         }
     }
 }
