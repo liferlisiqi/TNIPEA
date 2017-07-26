@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections;
 
-namespace TOS
+namespace TNIPEA
 {
     class Find
     {
@@ -102,12 +102,12 @@ namespace TOS
         }
 
         //寻找不被给定Pareto支配的解
-        public static ArrayList ndSolutions(ArrayList solutions, Solution pareto)
+        public static ArrayList ndSolutions(ArrayList solutions, Solution Pareto)
         {
             ArrayList ndSolutions = new ArrayList();
             foreach (Solution i in solutions)
             {
-                if (!pareto.dominate(i) && !pareto.equal(i))
+                if (!Pareto.dominate(i) && !Pareto.equal(i))
                     ndSolutions.Add(i);
             }
             return ndSolutions;

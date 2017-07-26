@@ -8,7 +8,7 @@ using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 using System.IO;
 
-namespace TOS
+namespace TNIPEA
 {
     class NPOIHelper
     {

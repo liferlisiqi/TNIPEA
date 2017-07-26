@@ -1,4 +1,4 @@
-﻿namespace TOS
+﻿namespace TNIPEA
 {
     partial class myForm
     {

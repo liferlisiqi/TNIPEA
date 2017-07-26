@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Collections;
 using System.Data.SqlClient;
-namespace TOS
+namespace TNIPEA
 {
     public partial class myForm : Form
     {
@@ -55,18 +55,18 @@ namespace TOS
         private void EC_Click(object sender, EventArgs e)
         {
             ArrayList restSolution = allSolutions;
-            ArrayList paretos = new ArrayList();
-            Solution pareto = new Solution();
+            ArrayList ParetoSet = new ArrayList();
+            Solution Pareto = new Solution();
             DateTime beginTime = System.DateTime.Now;
             while (restSolution.Count != 0)
             {
-                pareto = Find.min3Pareto(restSolution);
-                restSolution = Find.ndSolutions(restSolution, pareto);
-                paretos.Add(pareto);
+                Pareto = Find.min3Pareto(restSolution);
+                restSolution = Find.ndSolutions(restSolution, Pareto);
+                ParetoSet.Add(Pareto);
             }
             DateTime endTime = System.DateTime.Now;
             ECBox.Text = (endTime - beginTime).TotalSeconds.ToString();
-            Console.WriteLine("epslonCUT： " + paretos.Count);
+            Console.WriteLine("epslonCUT： " + ParetoSet.Count);
             //NPOIHelper.outputExcel(paretos, "D:/源码/多目标精确算法/多目标benchmark/GAP/3-8-11p.xls");
         }
 
@@ -192,7 +192,7 @@ namespace TOS
             SqlConnection conn = new SqlConnection("Data Source=USER-20160720BD;"
                 + "Initial Catalog=MNGAPbenchmark;Integrated Security=True");
             DataTable dt = new DataTable();
-            string sql = "select totaltime,totalcost,timeCV,costCV from " + tablename + " where ID > " + lo + " and ID <= " + hi;
+            string sql = "select totaltime,totalcost,timeCV from " + tablename + " where ID > " + lo + " and ID <= " + hi;
             try
             {
                 conn.Open();
@@ -214,7 +214,7 @@ namespace TOS
                 Solution solution = new Solution(
                    Convert.ToDouble(dt.Rows[i][0].ToString()),
                    Convert.ToDouble(dt.Rows[i][1].ToString()),
-                   Convert.ToDouble(dt.Rows[i][2].ToString()),);
+                   Convert.ToDouble(dt.Rows[i][2].ToString()));
                 allSolutions.Add(solution);
             }
         }
