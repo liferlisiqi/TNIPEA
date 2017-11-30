@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Collections;
 using System.Data.SqlClient;
+using System.Data.OleDb;
+
 namespace TNIPEA
 {
     public partial class myForm : Form
@@ -22,7 +24,7 @@ namespace TNIPEA
         private void readDataBTN_Click(object sender, EventArgs e)
         {
             DateTime beginTime = System.DateTime.Now;
-            readSubData("[5-15-1]", 0, 5000000);
+            readSubData("[5-17-1]", 0, 5000000);
             //readSubData("[5-16-1]", 5000000, 10000000);
             //readSubData(10000000, 15000000);
             DateTime endTime = System.DateTime.Now;
@@ -42,7 +44,7 @@ namespace TNIPEA
             while (true)
             {
                 Pareto = Find.min3Pareto(restSolutions, ParetoSet);
-                if (Find.min3Pareto(restSolutions, ParetoSet).ob3 == 1000)
+                if (Find.min3Pareto(restSolutions, ParetoSet).ob3 == 10000)
                     break;
                 ParetoSet.Add(Pareto);
             }
@@ -66,8 +68,8 @@ namespace TNIPEA
             }
             DateTime endTime = System.DateTime.Now;
             ECBox.Text = (endTime - beginTime).TotalSeconds.ToString();
-            Console.WriteLine("epslonCUT： " + ParetoSet.Count);
-            //NPOIHelper.outputExcel(paretos, "D:/源码/多目标精确算法/多目标benchmark/GAP/3-8-11p.xls");
+            Console.WriteLine("EC： " + ParetoSet.Count);
+            NPOIHelper.outputExcel(ParetoSet, "G:/6p.xls");
         }
 
         //极点Pareto剪切，epslon约束法
@@ -97,7 +99,7 @@ namespace TNIPEA
 
             DateTime endTime = System.DateTime.Now;
             PCepslonBox.Text = (endTime - beginTime).TotalSeconds.ToString();
-            Console.WriteLine("PCepslon： " + ParetoSet.Count);
+            Console.WriteLine("PC： " + ParetoSet.Count);
         }
 
         //极点Pareto剪切，每步剪切
@@ -127,7 +129,7 @@ namespace TNIPEA
 
             DateTime endTime = System.DateTime.Now;
             PCECBox.Text = (endTime - beginTime).TotalSeconds.ToString();
-            Console.WriteLine("PCEC: " + ParetoSet.Count);
+            Console.WriteLine("PEC: " + ParetoSet.Count);
         }
 
         //理想Pareto剪切，每步剪切
@@ -150,7 +152,7 @@ namespace TNIPEA
             }
             DateTime endTime = System.DateTime.Now;
             ICECBox.Text = (endTime - beginTime).TotalSeconds.ToString();
-            Console.WriteLine("ICEC: " + ParetoSet.Count);
+            Console.WriteLine("IEC: " + ParetoSet.Count);
         }
 
         //极点Pareto剪切，理想Pareto剪切，每步CUT
@@ -217,6 +219,38 @@ namespace TNIPEA
                    Convert.ToDouble(dt.Rows[i][2].ToString()));
                 allSolutions.Add(solution);
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            DataTable All_Data = new DataTable();
+            string strConn = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=G:/解.xls;Extended Properties='Excel 12.0;HDR=YES;IMEX=1;'";
+            OleDbConnection Conn = new OleDbConnection(strConn);
+            Conn.Open();
+            OleDbDataAdapter Adap = new OleDbDataAdapter("SELECT*FROM[6$]", Conn);
+
+            try
+            {
+                Adap.Fill(All_Data);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message.ToString());
+            }
+            finally
+            {
+                Conn.Close();
+            }
+
+            for (int j = 0; j < All_Data.Rows.Count; j++)
+            {
+                double ob1 = 1 - Convert.ToDouble(All_Data.Rows[j][0].ToString());
+                double ob2 = 1 - Convert.ToDouble(All_Data.Rows[j][1].ToString());
+                double ob3 = 1 - Convert.ToDouble(All_Data.Rows[j][2].ToString());
+                Solution Temp_Data = new Solution(ob1, ob2, ob3);
+                allSolutions.Add(Temp_Data);
+            }
+            MessageBox.Show("ok");
         }
     }
 }

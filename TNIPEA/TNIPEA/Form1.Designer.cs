@@ -43,6 +43,7 @@
             this.ICECBox = new System.Windows.Forms.TextBox();
             this.PIECBTN = new System.Windows.Forms.Button();
             this.PIECBox = new System.Windows.Forms.TextBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // readDataBTN
@@ -172,11 +173,22 @@
             this.PIECBox.Size = new System.Drawing.Size(100, 21);
             this.PIECBox.TabIndex = 15;
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(41, 393);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 16;
+            this.button1.Text = "读Excel";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // myForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(325, 454);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.PIECBox);
             this.Controls.Add(this.PIECBTN);
             this.Controls.Add(this.ICECBox);
@@ -216,6 +228,7 @@
         private System.Windows.Forms.TextBox ICECBox;
         private System.Windows.Forms.Button PIECBTN;
         private System.Windows.Forms.TextBox PIECBox;
+        private System.Windows.Forms.Button button1;
     }
 }
 
