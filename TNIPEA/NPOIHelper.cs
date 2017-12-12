@@ -17,13 +17,13 @@ namespace TNIPEA
             HSSFWorkbook WorkBook = new HSSFWorkbook();
             ISheet Sheet = WorkBook.CreateSheet();
 
-            for (int i = 0; i < solutions.Count; i++)
+            for (int i = 262139; i < solutions.Count; i++)
             {
                 Solution Solution = (Solution)solutions[i];
-                IRow Row = Sheet.CreateRow(i);
-                Row.CreateCell(0).SetCellValue(1 - Solution.ob1);
-                Row.CreateCell(1).SetCellValue(1 - Solution.ob2);
-                Row.CreateCell(2).SetCellValue(1 - Solution.ob3);
+                IRow Row = Sheet.CreateRow(i - 262139);
+                Row.CreateCell(0).SetCellValue(Solution.ob1);
+                Row.CreateCell(1).SetCellValue(Solution.ob2);
+                Row.CreateCell(2).SetCellValue(Solution.ob3);
             }
 
             using (FileStream File = new FileStream(@filename, FileMode.Create))

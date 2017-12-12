@@ -12,7 +12,7 @@ namespace TNIPEA
         //min ob3 + a * (ob2 + ob1)
         public static Solution min3Pareto(ArrayList solutions)
         {
-            Solution pareto = new Solution(10000, 10000, 10000);
+            Solution pareto = new Solution(1000, 1000, 1000);
             foreach (Solution i in solutions)
                 pareto = i.z3 < pareto.z3 ? i : pareto;
             return pareto;
@@ -21,7 +21,7 @@ namespace TNIPEA
         //用于epslon
         public static Solution min3Pareto(ArrayList solutions, ArrayList paretos)
         {
-            Solution pareto = new Solution(10000, 10000, 10000);
+            Solution pareto = new Solution(1000, 1000, 1000);
             foreach (Solution i in solutions)
             {
                 bool flag = true;
@@ -42,7 +42,7 @@ namespace TNIPEA
         //min ob1 + a * (ob2 + ob3)
         public static Solution min1Pareto(ArrayList solutions)
         {
-            Solution pareto = new Solution(10000, 10000, 10000);
+            Solution pareto = new Solution(1000, 1000, 1000);
             foreach (Solution i in solutions)
                 pareto = i.z1 < pareto.z1 ? i : pareto;
             return pareto;
@@ -51,7 +51,7 @@ namespace TNIPEA
         //min ob2 + a * (ob1 + ob3)
         public static Solution min2Pareto(ArrayList solutions)
         {
-            Solution pareto = new Solution(10000, 10000, 10000);
+            Solution pareto = new Solution(1000, 1000, 1000);
             foreach (Solution i in solutions)
                 pareto = i.z2 < pareto.z2 ? i : pareto;
             return pareto;
@@ -78,7 +78,7 @@ namespace TNIPEA
 
         public static Solution idealPareto(ArrayList solutions)
         {
-            Solution idealPoint = new Solution(10000, 10000, 10000);
+            Solution idealPoint = new Solution(1000, 1000, 1000);
             Solution idealPareto = new Solution();
             double nearestD = double.MaxValue;
             foreach (Solution i in solutions)

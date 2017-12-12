@@ -23,9 +23,9 @@ namespace TNIPEA
             this.ob1 = ob1;
             this.ob2 = ob2;
             this.ob3 = ob3;
-            this.z1 = ob1 + 0.0000001 * (ob2 + ob3);
-            this.z2 = ob2 + 0.0000001 * (ob1 + ob3);
-            this.z3 = ob3 + 0.0000001 * (ob1 + ob2);
+            this.z1 = ob1 + 0.000000001 * (ob2 + ob3);
+            this.z2 = ob2 + 0.000000001 * (ob1 + ob3);
+            this.z3 = ob3 + 0.000000001 * (ob1 + ob2);
             this.sum = ob1 + ob2 + ob3;
         }
 
