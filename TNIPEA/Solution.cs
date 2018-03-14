@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections;
 
 namespace TNIPEA
 {
@@ -15,6 +16,7 @@ namespace TNIPEA
         public double z2;
         public double z3;
         public double sum;
+        public bool isDominate = false;
 
         public Solution() { }
 

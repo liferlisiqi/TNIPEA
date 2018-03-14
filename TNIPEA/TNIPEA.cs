@@ -46,13 +46,33 @@ namespace TNIPEA
             while (true)
             {
                 Pareto = Find.min3Pareto(restSolutions, ParetoSet);
-                if (Find.min3Pareto(restSolutions, ParetoSet).ob3 == 1000)
+                if (Pareto.ob3 == 1000)
                     break;
                 ParetoSet.Add(Pareto);
             }
             DateTime endTime = System.DateTime.Now;
             this.E_P_Text.Text = ParetoSet.Count + "";
             this.E_T_Text.Text = (endTime - beginTime).TotalSeconds + "";
+        }
+
+        //epslon约束法，储存支配记录
+        private void E2_Click(object sender, EventArgs e)
+        {
+            ArrayList restSolutions = allSolutions;
+            ArrayList ParetoSet = new ArrayList();
+            DateTime beginTime = System.DateTime.Now;
+            Solution Pareto = Find.min3Pareto(restSolutions);
+            ParetoSet.Add(Pareto);
+            while (true)
+            {
+                Pareto = Find.min3Pareto2(restSolutions, Pareto);
+                if (Pareto.ob3 == 1000)
+                    break;
+                ParetoSet.Add(Pareto);
+            }
+            DateTime endTime = System.DateTime.Now;
+            this.E2_P_Text.Text = ParetoSet.Count + "";
+            this.E2_T_Text.Text = (endTime - beginTime).TotalSeconds + "";
         }
 
         //极点Pareto剪切，epslon约束法
@@ -261,7 +281,7 @@ namespace TNIPEA
 
         private void readSubData(String tablename, int lo, int hi)
         {
-            SqlConnection conn = new SqlConnection("Data Source=703B\\SQL2005;Initial Catalog=MNGAP;Integrated Security=True");
+            SqlConnection conn = new SqlConnection("Data Source=USER-20160720BD;Initial Catalog=MNGAPbenchmark;Integrated Security=True");
             DataTable dt = new DataTable();
             string sql = "select totaltime,totalcost,timeCV from " + tablename + " where ID > " + lo + " and ID <= " + hi;
             try
@@ -288,7 +308,6 @@ namespace TNIPEA
                    Math.Floor(Convert.ToDouble(dt.Rows[i][2].ToString()) * 10000) / 10000);
                 allSolutions.Add(solution);
             }
-        }
-
+        }    
     }
 }

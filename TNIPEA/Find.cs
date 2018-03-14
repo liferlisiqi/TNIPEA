@@ -39,6 +39,26 @@ namespace TNIPEA
             return pareto;
         }
 
+        //用于epslon储存支配记录
+        public static Solution min3Pareto2(ArrayList solutions, Solution lastPareto)
+        {
+            Solution pareto = new Solution(1000, 1000, 1000);
+            foreach (Solution i in solutions)
+            {
+                if (i.isDominate)
+                    continue;
+
+                if(!(i.ob1 < lastPareto.ob1 || i.ob2 < lastPareto.ob2))
+                {
+                    i.isDominate = true;
+                    continue;
+                }
+
+                pareto = i.z3 < pareto.z3 ? i : pareto;
+            }
+            return pareto;
+        }
+
         //min ob1 + a * (ob2 + ob3)
         public static Solution min1Pareto(ArrayList solutions)
         {
